@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Carbon Sense - Calculate carbon emissions from everyday products and get natural offset solutions.">
+  <title>Carbon Sense - Emission Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>🌱 Carbon Sense</h1>
+      <p class="tagline">Calculate your carbon footprint and find natural solutions</p>
+    </header>
+
+    <main>
+      <!-- Upload Form -->
+      <section class="upload-section">
+        <form method="POST" enctype="multipart/form-data" class="upload-form">
+          <div class="form-group">
+            <label for="image">Upload Product Image</label>
+            <div class="file-input-wrapper">
+              <input 
+                type="file" 
+                id="image"
+                name="image" 
+                accept=".png,.jpg,.jpeg,.gif,.webp"
+                required
+                aria-label="Select product image"
+              >
+              <span class="file-name">No file selected</span>
+            </div>
+            <p class="help-text">Tip: Use filenames like 'shirt.jpg' or 'laptop.png' for accurate detection</p>
+          </div>
+          <button type="submit" class="btn-primary">Calculate CO₂ Emission</button>
+        </form>
+      </section>
+
+      <!-- Error Message -->
+      {% if error %}
+      <div class="alert alert-error" role="alert">
+        <span class="alert-icon">⚠️</span>
+        <span>{{ error }}</span>
+      </div>
+      {% endif %}
+
+      <!-- Results -->
+      {% if result %}
+      <section class="result-section">
+        <h2>Results</h2>
+        <div class="result-card">
+          <div class="result-item">
+            <span class="label">📦 Product:</span>
+            <span class="value">{{ product_found }}</span>
+          </div>
+          <div class="result-item">
+            <span class="label">💨 CO₂ Emission:</span>
+            <span class="value highlight">{{ result }}</span>
+          </div>
+          <div class="result-item">
+            <span class="label">🌍 Natural Solution:</span>
+            <span class="value solution">{{ solution }}</span>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+
+      <!-- Info Section -->
+      <section class="info-section">
+        <h2>📚 About Carbon Sense</h2>
+        <p>
+          Carbon Sense helps you understand the environmental impact of everyday products 
+          and suggests natural, actionable solutions to offset your carbon footprint.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Carbon Sense. Let's build a sustainable future together.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Update file name display
+    document.getElementById('image').addEventListener('change', function(e) {
+      const fileName = e.target.files[0]?.name || 'No file selected';
+      document.querySelector('.file-name').textContent = fileName;
+    });
+  </script>
+</body>
+</html>
